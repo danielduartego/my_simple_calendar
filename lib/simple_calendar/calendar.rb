@@ -35,7 +35,7 @@ module SimpleCalendar
       td_class << "next-month"           if start_date.month != day.month && day > start_date
       td_class << "current-month"        if start_date.month == day.month
       td_class << "has-events"           if sorted_events.fetch(day, []).any?
-      td_class << "has-events-booked"    if sorted_events.fetch(day, []).any? && booked
+      # td_class << "has-events-booked"    if sorted_events.fetch(day, []).any? && booked
 
       td_class
     end
