@@ -27,19 +27,24 @@ module SimpleCalendar
 
       td_class = ["day"]
       td_class << "wday-#{day.wday.to_s}"
-      td_class << "today"         if today == day
-      td_class << "past"          if today > day
-      td_class << "future"        if today < day
-      td_class << 'start-date'    if day.to_date == start_date.to_date
-      td_class << "prev-month"    if start_date.month != day.month && day < start_date
-      td_class << "next-month"    if start_date.month != day.month && day > start_date
-      td_class << "current-month" if start_date.month == day.month
-      td_class << "have-events"    if sorted_events.fetch(day, []).any?
+      td_class << "today"                if today == day
+      td_class << "past"                 if today > day
+      td_class << "future"               if today < day
+      td_class << 'start-date'           if day.to_date == start_date.to_date
+      td_class << "prev-month"           if start_date.month != day.month && day < start_date
+      td_class << "next-month"           if start_date.month != day.month && day > start_date
+      td_class << "current-month"        if start_date.month == day.month
+      td_class << "has-events"           if sorted_events.fetch(day, []).any?
+      td_class << "has-events-booked"    if sorted_events.fetch(day, []).any? && booked
 
       td_class
     end
 
     private
+
+      def booked
+        calendar.user.bookings.where(accepted: true)
+      end
 
       def partial_name
         self.class.name.underscore
